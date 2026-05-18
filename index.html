@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karun Krishnan — Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --accent: #7c6af7;
+    --accent2: #e8705a;
+    --accent3: #4ecdc4;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--white) !important;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 5% 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(124,106,247,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,112,90,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 50% at 80% 10%, rgba(78,205,196,0.07) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,106,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,106,247,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent3);
+    border: 1px solid rgba(78,205,196,0.3);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent3);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name .line2 {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-title span { color: var(--accent2); }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,106,247,0.4); }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-outline:hover { border-color: var(--accent); background: rgba(124,106,247,0.08); }
+
+  /* Hero Stats */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 3rem;
+  }
+
+  .stat {
+    background: var(--card);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* Hero Right — decorative terminal */
+  .hero-terminal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  .terminal-bar {
+    background: var(--bg2);
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f56; }
+  .dot.y { background: #ffbd2e; }
+  .dot.g { background: #27c93f; }
+
+  .terminal-title { margin-left: 0.5rem; color: var(--muted); font-size: 0.75rem; }
+
+  .terminal-body { padding: 1.5rem; line-height: 2; }
+
+  .t-line { display: flex; gap: 0.5rem; }
+  .t-prompt { color: var(--accent3); }
+  .t-cmd { color: var(--text); }
+  .t-out { color: var(--muted); padding-left: 1rem; font-style: italic; }
+  .t-key { color: var(--accent2); }
+  .t-val { color: var(--accent3); }
+  .t-blank { height: 0.5rem; }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--accent);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ─── SECTION WRAPPER ─── */
+  .section {
+    padding: 6rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .detail-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  .detail-key { color: var(--accent2); min-width: 80px; }
+  .detail-val { color: var(--text); }
+  .detail-val a { color: var(--accent); text-decoration: none; }
+  .detail-val a:hover { text-decoration: underline; }
+
+  .education-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .edu-card:nth-child(2) { border-left-color: var(--accent2); }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-school {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .edu-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent3);
+    margin-top: 0.4rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .exp-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .exp-item:hover { border-color: var(--accent); }
+
+  .exp-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+  }
+
+  .exp-company {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .company-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .badge-lead { background: rgba(124,106,247,0.15); color: var(--accent); }
+  .badge-ds { background: rgba(232,112,90,0.15); color: var(--accent2); }
+
+  .exp-role {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent3);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .exp-location {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.2rem;
+  }
+
+  .exp-body {
+    padding: 0 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .exp-bullets {
+    list-style: none;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .exp-bullets li {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '▸';
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .skill-category:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .skill-cat-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-cat-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .skill-tag:hover { background: rgba(124,106,247,0.1); border-color: var(--accent); color: var(--accent); }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.8rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+  .project-card:hover::before { transform: scaleX(1); }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .tag-ml { background: rgba(124,106,247,0.15); color: var(--accent); }
+  .tag-da { background: rgba(78,205,196,0.15); color: var(--accent3); }
+  .tag-cv { background: rgba(232,112,90,0.15); color: var(--accent2); }
+  .tag-az { background: rgba(255,196,78,0.15); color: #ffc44e; }
+  .tag-py { background: rgba(55,178,77,0.15); color: #37b24d; }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.87rem;
+    color: var(--muted);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .project-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  .project-lang {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .lang-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #f1e05a;
+  }
+
+  .project-arrow {
+    color: var(--accent);
+    font-size: 1rem;
+    transition: transform 0.2s;
+  }
+
+  .project-card:hover .project-arrow { transform: translate(3px, -3px); }
+
+  /* ─── CERTIFICATES ─── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .cert-card:hover { border-color: var(--accent); background: rgba(124,106,247,0.04); }
+
+  .cert-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: rgba(124,106,247,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .cert-issuer {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent3);
+  }
+
+  /* ─── LANGUAGES ─── */
+  .lang-table {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .lang-table th {
+    background: var(--bg2);
+    padding: 0.8rem 1.5rem;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .lang-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    font-size: 0.88rem;
+  }
+
+  .lang-table tr:last-child td { border-bottom: none; }
+
+  .lang-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .level-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+  }
+
+  .level-c2 { background: rgba(78,205,196,0.15); color: var(--accent3); }
+  .level-c1 { background: rgba(124,106,247,0.15); color: var(--accent); }
+  .level-b1 { background: rgba(232,112,90,0.15); color: var(--accent2); }
+  .level-a2 { background: rgba(122,122,154,0.15); color: var(--muted); }
+
+  /* ─── CONTACT ─── */
+  .contact-section {
+    padding: 6rem 5%;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .contact-headline {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .contact-headline span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contact-sub { color: var(--muted); font-size: 0.95rem; line-height: 1.8; }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
+
+  .contact-link-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .icon-li { background: rgba(10,102,194,0.2); }
+  .icon-gh { background: rgba(255,255,255,0.05); }
+  .icon-em { background: rgba(232,112,90,0.15); }
+  .icon-ig { background: rgba(228,64,95,0.15); }
+
+  .contact-link-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .contact-link-val {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem 5%;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    max-width: 100%;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-terminal { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-stats { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Karun<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-tag">Available for opportunities</div>
+      <h1 class="hero-name">
+        KARUN<br>
+        <span class="line2">KRISHNAN</span>
+      </h1>
+      <p class="hero-title">Data Scientist &amp; <span>ML Engineer</span> · Wien, Austria</p>
+      <p class="hero-desc">Data Science master's student at TU Wien with hands-on experience in data analysis, machine learning, and scalable data pipelines. I turn raw data into actionable insights.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View Projects ↓</a>
+        <a href="https://www.linkedin.com/in/karun-krishnan-9ab74b245/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">15</span><span class="stat-label">Repositories</span></div>
+        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Internships</span></div>
+        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Certificates</span></div>
+      </div>
+    </div>
+
+    <div class="hero-terminal">
+      <div class="terminal-bar">
+        <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        <span class="terminal-title">karun@data-science ~ zsh</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">❯</span><span class="t-cmd">whoami</span></div>
+        <div class="t-line t-out"><span class="t-key">name</span>: <span class="t-val">"Karun Krishnan"</span></div>
+        <div class="t-line t-out"><span class="t-key">location</span>: <span class="t-val">"Wien, Austria 🇦🇹"</span></div>
+        <div class="t-line t-out"><span class="t-key">education</span>: <span class="t-val">"MSc Data Science @ TU Wien"</span></div>
+        <div class="t-line t-out"><span class="t-key">background</span>: <span class="t-val">"B.Tech CS @ Ahalia, India"</span></div>
+        <div class="t-blank"></div>
+        <div class="t-line"><span class="t-prompt">❯</span><span class="t-cmd">cat skills.txt</span></div>
+        <div class="t-line t-out"><span class="t-val">Python</span> · <span class="t-val">SQL</span> · <span class="t-val">Scikit-learn</span></div>
+        <div class="t-line t-out"><span class="t-val">Pandas</span> · <span class="t-val">Power BI</span> · <span class="t-val">Azure</span></div>
+        <div class="t-line t-out"><span class="t-val">ML Pipelines</span> · <span class="t-val">EDA</span> · <span class="t-val">LLMs</span></div>
+        <div class="t-blank"></div>
+        <div class="t-line"><span class="t-prompt">❯</span><span class="cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding: 6rem 5%;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-header fade-up">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About Me</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid fade-up">
+      <div class="about-text">
+        <p>I'm a <strong>Data Science master's student at TU Wien</strong> (Vienna, Austria), originally from Palakkad, India. With a foundation in Computer Science Engineering from Ahalia School of Engineering and Technology, I've built hands-on expertise across the full data science stack — from raw data ingestion to production-ready ML models.</p>
+        <p>My professional experience spans building <strong>scalable data pipelines</strong>, designing interactive dashboards, and developing predictive ML models across multiple internship roles in India. I'm deeply interested in Business Intelligence, data visualization, and user-oriented analytics.</p>
+        <p>Currently exploring <strong>LLMs, Azure Data Engineering</strong>, and Lakehouse architectures while pursuing my master's at TU Wien. I communicate data insights clearly to both technical and business audiences.</p>
+
+        <div class="about-details">
+          <div class="detail-row"><span class="detail-key">Email</span><span class="detail-val"><a href="mailto:karunkrishn26@gmail.com">karunkrishn26@gmail.com</a></span></div>
+          <div class="detail-row"><span class="detail-key">Phone</span><span class="detail-val">(+43) 67764729053</span></div>
+          <div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">Wien, Austria</span></div>
+          <div class="detail-row"><span class="detail-key">Origin</span><span class="detail-val">Palakkad, India</span></div>
+          <div class="detail-row"><span class="detail-key">Instagram</span><span class="detail-val"><a href="https://www.instagram.com/karun_k_23/" target="_blank">@karun_k_23</a></span></div>
+          <div class="detail-row"><span class="detail-key">Website</span><span class="detail-val"><a href="https://karunkrishnan.carrd.co" target="_blank">karunkrishnan.carrd.co</a></span></div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;color:var(--white);margin-bottom:1.5rem;font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;">Education</h3>
+        <div class="education-cards">
+          <div class="edu-card">
+            <div class="edu-degree">MSc Data Science</div>
+            <div class="edu-school">Technische Universität Wien</div>
+            <div class="edu-date">03/2026 – Current · Vienna, Austria</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-degree">B.Tech in Computer Science &amp; Engineering</div>
+            <div class="edu-school">Ahalia School of Engineering and Technology</div>
+            <div class="edu-date">08/2020 – 06/2024 · Kerala, India</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="padding:6rem 5%;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-header fade-up">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="exp-list fade-up">
+
+      <!-- Ozibook -->
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">
+              Ozibook
+              <span class="company-badge badge-lead">Team Lead</span>
+            </div>
+            <div class="exp-role">Data Analyst Team Lead Intern</div>
+          </div>
+          <div>
+            <div class="exp-date">01/2025 – 12/2025</div>
+            <div class="exp-location">Bengaluru, India</div>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li>Developed scalable data pipelines in Python to support structured data collection and AI-driven workflows</li>
+            <li>Designed and implemented data processing systems ensuring data quality, consistency, and accessibility</li>
+            <li>Built interactive dashboards for data-driven decision-making and business insights</li>
+            <li>Collaborated with cross-functional teams to translate business requirements into structured data solutions</li>
+            <li>Maintained technical documentation and implemented workflow tracking for process transparency and optimization</li>
+            <li>Contributed to improving operational efficiency through automation-oriented thinking and structured data handling</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cognifyz -->
+      <div class="exp-item" style="margin-top:0.5rem;">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">
+              Cognifyz Technologies
+              <span class="company-badge badge-ds">Data Science</span>
+            </div>
+            <div class="exp-role">Data Science Intern</div>
+          </div>
+          <div>
+            <div class="exp-date">11/2024 – 12/2024</div>
+            <div class="exp-location">India (Remote)</div>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li>Developed and evaluated machine learning models for predictive analytics and AI-driven insights</li>
+            <li>Performed data preprocessing, feature engineering, and workflow structuring for scalable analysis</li>
+            <li>Translated analytical results into actionable insights for business and technical stakeholders</li>
+            <li>Collaborated in team-based environments to support end-to-end data science workflows</li>
+            <li>Strengthened understanding of model lifecycle, validation, and performance monitoring</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Encryptix -->
+      <div class="exp-item" style="margin-top:0.5rem;">
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">
+              Encryptix
+              <span class="company-badge badge-ds">Data Science</span>
+            </div>
+            <div class="exp-role">Data Science Intern</div>
+          </div>
+          <div>
+            <div class="exp-date">08/2024 – 09/2024</div>
+            <div class="exp-location">India (Remote)</div>
+          </div>
+        </div>
+        <div class="exp-body">
+          <ul class="exp-bullets">
+            <li>Built and optimized machine learning models, improving prediction accuracy and supporting data-driven decision-making workflows</li>
+            <li>Conducted data preprocessing and exploratory data analysis (EDA) for structured workflows</li>
+            <li>Implemented testing and validation processes, ensuring reproducibility and reliability of models</li>
+            <li>Documented model performance and improvements, supporting continuous optimization practices</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="padding:6rem 5%;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-header fade-up">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid fade-up">
+
+      <div class="skill-category">
+        <div class="skill-cat-title">AI &amp; Machine Learning</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Predictive Modeling</span>
+          <span class="skill-tag">Model Optimization</span>
+          <span class="skill-tag">Statistics</span>
+          <span class="skill-tag">EDA</span>
+          <span class="skill-tag">Feature Engineering</span>
+          <span class="skill-tag">AI-driven Workflows</span>
+          <span class="skill-tag">LLMs (applied)</span>
+          <span class="skill-tag">Scalable AI Systems</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-title">Programming</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Seaborn</span>
+          <span class="skill-tag">Plotly</span>
+          <span class="skill-tag">GeoPandas</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-title">Data &amp; Engineering</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Data Pipelines</span>
+          <span class="skill-tag">Data Processing</span>
+          <span class="skill-tag">Data Quality</span>
+          <span class="skill-tag">Data Cleaning</span>
+          <span class="skill-tag">Data Transformation</span>
+          <span class="skill-tag">Data Governance</span>
+          <span class="skill-tag">Azure Data Factory</span>
+          <span class="skill-tag">Databricks</span>
+          <span class="skill-tag">PySpark</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-title">BI &amp; Visualization</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Dashboard Development</span>
+          <span class="skill-tag">KPI Reporting</span>
+          <span class="skill-tag">Data Visualization</span>
+          <span class="skill-tag">Excel (Advanced)</span>
+          <span class="skill-tag">Reporting</span>
+          <span class="skill-tag">BI Best Practices</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-title">Databases &amp; Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">SQL Databases</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">API Concepts</span>
+          <span class="skill-tag">MS Office</span>
+          <span class="skill-tag">Copilot</span>
+          <span class="skill-tag">ChatGPT</span>
+          <span class="skill-tag">Azure Synapse</span>
+        </div>
+      </div>
+
+      <div class="skill-category">
+        <div class="skill-cat-title">Soft Skills &amp; Practices</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Documentation</span>
+          <span class="skill-tag">User Support</span>
+          <span class="skill-tag">Stakeholder Communication</span>
+          <span class="skill-tag">Structured Problem-Solving</span>
+          <span class="skill-tag">Cross-functional Collaboration</span>
+          <span class="skill-tag">Workflow Tracking</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="padding:6rem 5%;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-header fade-up">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <p style="color:var(--muted);margin-bottom:2rem;font-size:0.9rem;" class="fade-up">
+      All 15 repositories available on <a href="https://github.com/karunkrishnan2002" target="_blank" style="color:var(--accent);text-decoration:none;">github.com/karunkrishnan2002</a>. Highlighted projects below.
+    </p>
+
+    <div class="projects-grid fade-up">
+
+      <a class="project-card" href="https://github.com/karunkrishnan2002/movie-rating-prediction" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-ml">ML</span>
+          <span class="project-tag tag-py">Python</span>
+        </div>
+        <div class="project-name">Movie Rating Prediction</div>
+        <div class="project-desc">Machine learning model to predict movie ratings. Uses regression techniques with feature engineering on movie metadata to estimate audience and critic scores.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot"></span>Jupyter Notebook</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/karunkrishnan2002/Credit-Card-FraudDetection" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-ml">ML</span>
+          <span class="project-tag tag-py">Python</span>
+        </div>
+        <div class="project-name">Credit Card Fraud Detection</div>
+        <div class="project-desc">ML model designed to detect fraudulent transactions on a highly imbalanced dataset (only 0.17% fraud). Tackles class imbalance with advanced resampling and ensemble techniques.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot"></span>Jupyter Notebook</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/karunkrishnan2002/iris-flower-classification" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-ml">ML</span>
+          <span class="project-tag tag-py">Python</span>
+        </div>
+        <div class="project-name">Iris Flower Classification</div>
+        <div class="project-desc">Classic multiclass classification on the Iris dataset. Implements and compares multiple supervised learning algorithms with visualization of decision boundaries.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot"></span>Jupyter Notebook</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/karunkrishnan2002/Azure-Data-Engineering" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-az">Azure</span>
+          <span class="project-tag tag-py">Python</span>
+        </div>
+        <div class="project-name">Azure Data Engineering</div>
+        <div class="project-desc">End-to-end data engineering pipeline built on Microsoft Azure. Covers data ingestion, transformation, and orchestration using Azure Data Factory, Databricks, and Synapse Analytics.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot"></span>Jupyter Notebook</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/karunkrishnan2002/Netflix-content-Analysis" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-da">Data Analysis</span>
+          <span class="project-tag tag-py">Python</span>
+        </div>
+        <div class="project-name">Netflix Content Analysis</div>
+        <div class="project-desc">Exploratory data analysis of Netflix's content library. Uncovers trends in genres, release years, content ratings, and regional production using rich visualizations.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot" style="background:#4ecdc4;"></span>Python</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/karunkrishnan2002/Azure-DE-DS-DA-Smart-Meter" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-az">Azure</span>
+          <span class="project-tag tag-ml">ML</span>
+          <span class="project-tag tag-da">DA</span>
+        </div>
+        <div class="project-name">Azure Smart Meter Pipeline</div>
+        <div class="project-desc">Full-stack data project combining Data Engineering, Data Science, and Data Analytics on smart meter data. Integrates Azure services for real-time processing and predictive insights.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot"></span>Jupyter Notebook</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/karunkri/AIO-STEGANOGRAPHY1" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-cv">Computer Vision</span>
+          <span class="project-tag tag-py">Python</span>
+        </div>
+        <div class="project-name">AIO Steganography</div>
+        <div class="project-desc">All-in-one steganography tool for hiding and extracting information within digital media files. Implements multiple steganographic techniques for text and image data.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot" style="background:#3572A5;"></span>Python</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/karunkri/computer-stimulated-virtual-cursor" target="_blank">
+        <div class="project-tags">
+          <span class="project-tag tag-cv">Computer Vision</span>
+          <span class="project-tag tag-ml">ML</span>
+        </div>
+        <div class="project-name">Computer-Simulated Virtual Cursor</div>
+        <div class="project-desc">Real-time virtual cursor control using computer vision and hand gesture recognition. Enables touchless mouse control through a webcam using MediaPipe or similar frameworks.</div>
+        <div class="project-footer">
+          <span class="project-lang"><span class="lang-dot" style="background:#3572A5;"></span>Python</span>
+          <span class="project-arrow">↗</span>
+        </div>
+      </a>
+
+      <!-- Placeholder card for remaining repos -->
+      <a class="project-card" href="https://github.com/karunkrishnan2002" target="_blank" style="border-style:dashed;justify-content:center;align-items:center;text-align:center;min-height:200px;">
+        <div style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;">
+          <div style="font-size:2rem;margin-bottom:0.8rem;">+7</div>
+          more repositories<br>on GitHub
+        </div>
+        <div class="project-arrow" style="position:absolute;top:1.5rem;right:1.5rem;">↗</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="certificates" style="padding:6rem 5%;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-header fade-up">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Certificates</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="certs-grid fade-up">
+
+      <a class="cert-card" href="https://www.coursera.org/account/accomplishments/specialization/certificate/PVLLX72B9SPQ" target="_blank">
+        <div class="cert-icon">📊</div>
+        <div>
+          <div class="cert-name">Google Data Analytics Professional Certificate</div>
+          <div class="cert-issuer">Coursera · Google</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://www.coursera.org/account/accomplishments/certificate/7B22L3ZEHPLB" target="_blank">
+        <div class="cert-icon">🤖</div>
+        <div>
+          <div class="cert-name">Foundations of Data Science: K-Means Clustering in Python</div>
+          <div class="cert-issuer">Coursera</div>
+        </div>
+      </a>
+
+      <a class="cert-card" href="https://www.udemy.com/certificate/UC-a64c2e85-8ba9-45de-b1c1-07973da5b8f3/" target="_blank">
+        <div class="cert-icon">🐍</div>
+        <div>
+          <div class="cert-name">Python For Absolute Beginners</div>
+          <div class="cert-issuer">Udemy</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section id="languages" style="padding:6rem 5%;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-header fade-up">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Languages</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="fade-up">
+      <table class="lang-table">
+        <thead>
+          <tr>
+            <th>Language</th>
+            <th>Listening</th>
+            <th>Reading</th>
+            <th>Speaking</th>
+            <th>Interaction</th>
+            <th>Writing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="lang-name">English</span></td>
+            <td><span class="level-badge level-c2">C2</span></td>
+            <td><span class="level-badge level-c2">C2</span></td>
+            <td><span class="level-badge level-c1">C1</span></td>
+            <td><span class="level-badge level-c1">C1</span></td>
+            <td><span class="level-badge level-c2">C2</span></td>
+          </tr>
+          <tr>
+            <td><span class="lang-name">German</span></td>
+            <td><span class="level-badge level-a2">A2</span></td>
+            <td><span class="level-badge level-a2">A2</span></td>
+            <td><span class="level-badge level-b1">B1</span></td>
+            <td><span class="level-badge level-b1">B1</span></td>
+            <td><span class="level-badge level-a2">A2</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:1rem;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);">A1–A2: Basic · B1–B2: Independent · C1–C2: Proficient (CEFR Scale)</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="fade-up">
+      <h2 class="contact-headline">Let's <span>work<br>together.</span></h2>
+      <p class="contact-sub">I'm actively looking for data science, ML engineering, or BI analyst opportunities — internships, working student roles, or full-time. Based in Wien, open to remote.</p>
+    </div>
+    <div class="contact-links fade-up">
+      <a class="contact-link" href="https://www.linkedin.com/in/karun-krishnan-9ab74b245/" target="_blank">
+        <div class="contact-link-icon icon-li">💼</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">linkedin.com/in/karun-krishnan-9ab74b245</div>
+        </div>
+      </a>
+      <a class="contact-link" href="https://github.com/karunkrishnan2002" target="_blank">
+        <div class="contact-link-icon icon-gh">⌨️</div>
+        <div>
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-val">github.com/karunkrishnan2002</div>
+        </div>
+      </a>
+      <a class="contact-link" href="mailto:karunkrishn26@gmail.com">
+        <div class="contact-link-icon icon-em">✉️</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-val">karunkrishn26@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-link" href="https://www.instagram.com/karun_k_23/" target="_blank">
+        <div class="contact-link-icon icon-ig">📸</div>
+        <div>
+          <div class="contact-link-label">Instagram</div>
+          <div class="contact-link-val">@karun_k_23</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Karun Krishnan · Wien, Austria</span>
+  <span style="font-family:'DM Mono',monospace;font-size:0.7rem;">Data Scientist · ML Engineer · TU Wien</span>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Stagger children
+  document.querySelectorAll('.skills-grid, .projects-grid, .certs-grid').forEach(grid => {
+    Array.from(grid.children).forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.06}s`;
+      child.classList.add('fade-up');
+      obs.observe(child);
+    });
+  });
+</script>
+</body>
+</html>
